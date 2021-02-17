@@ -5,7 +5,8 @@
 #create a freestyle-project 
 
 #configure slave-container:
-see configure_agent-1.png
+add new node under localhost:8080/computer/new
+configure like in configure_agent-1.png
 get IP-adress of slave to set for Hostname: docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' agent-1
 add credentials: user:test, password: test
 
