@@ -3,7 +3,7 @@ FROM ubuntu:latest
 
 RUN apt update && apt install  openssh-server sudo -y
 
-RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 test 
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 jenkins
 
 # Install OpenJDK-8
 RUN apt-get update && \
@@ -24,7 +24,7 @@ RUN apt-get -y install git
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
 
-RUN  echo 'test:test' | chpasswd
+RUN  echo 'jenkins:jenkins' | chpasswd
 
 RUN service ssh start
 
