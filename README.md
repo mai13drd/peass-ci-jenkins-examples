@@ -17,17 +17,8 @@ This is a testproject for running peass-ci performance-measurements in a jenkins
 <br>
 
 ## Configure slave-container as build-node for the example-job
-* add new node under:<br>
-    localhost:8080/computer/new
-
-* configure like in configure_agent-1.png
-
-* get IP-adress of slave to set for Hostname:<br>
-    docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' agent-1
-
-* add credentials:<br>
-    user: jenkins<br>
-    password: jenkins
+* execute createNode.sh, use the ID of slave-container as shown after executing execute.sh
+* for example: ./createNode.sh 172.20.0.2
 
 <br>
 
