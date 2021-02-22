@@ -6,6 +6,9 @@ docker build -t slave files/slave
 cp files/master/casc.yaml jenkins_master_home
 
 mkdir -p jenkins_master_home/jobs/seed-job/workspace/dslScripts
+mkdir -p jenkins_master_home/plugins
+
+cp files/peass-ci.hpi jenkins_master_home/plugins
 
 cp files/master/seed-job/config.xml jenkins_master_home/jobs/seed-job
 cp files/master/dslScripts/helloWorld.groovy jenkins_master_home/jobs/seed-job/workspace/dslScripts
