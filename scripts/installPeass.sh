@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd ../files/.m2/repository/
 rm -rf {*,.*}
 
