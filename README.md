@@ -35,4 +35,4 @@ This is a testproject for running peass-ci performance-measurements in a jenkins
 
 * Configure a peass-ci buildstep, everything else is configured already.
 
-* Run createNode.sh with the shown IP of slave-container as parameter. This will trigger the build of demo-project.
+* Run createNode.sh with the shown IP of slave-container as parameter. This will create node agent-1 in jenkins. The build of demo-project is triggered, as soon as agent-1 is online.
