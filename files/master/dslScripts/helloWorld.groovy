@@ -1,6 +1,10 @@
-job('example') {
+job('demo-project') {
 
   label('agent-1')
+
+  scm {
+        github('mai13drd/demo-project')
+    }
 
   triggers {
              hudsonStartupTrigger {

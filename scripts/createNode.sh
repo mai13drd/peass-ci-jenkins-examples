@@ -2,7 +2,7 @@
 
 IP=$1
 
-cat <<EOF | java -jar jenkins-cli.jar -s "http://localhost:8080" -auth admin:123 create-node agent-1
+cat <<EOF | java -jar ../jenkins-cli.jar -s "http://localhost:8080" -auth admin:123 create-node agent-1
 <slave>
   <name>agent-1</name>
   <description></description>
