@@ -10,7 +10,7 @@ mkdir -p ../jenkins_master_home/plugins
 
 cp ../files/peass-ci.hpi ../jenkins_master_home/plugins
 
-./installPeass.sh
+#./installPeass.sh
 cp -r ../files/.m2 ../jenkins_master_home/.m2
 
 cp ../files/master/seed-job/config.xml ../jenkins_master_home/jobs/seed-job
