@@ -1,13 +1,11 @@
 FROM ubuntu:latest
 
-RUN apt update && apt install openssh-server sudo curl -y
+RUN apt update && \
+	apt install -y openssh-server sudo curl openjdk-8-jdk maven git
+
+RUN java -version
 
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 jenkins
-
-# Install OpenJDK-8
-RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk maven git && \
-    apt-get clean;
 
 # Fix certificate issues
 RUN apt-get update && \
@@ -15,12 +13,9 @@ RUN apt-get update && \
     apt-get clean && \
     update-ca-certificates -f;
 
-# Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-RUN export JAVA_HOME
-
-
 RUN  echo 'jenkins:jenkins' | chpasswd
+
+RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
 USER jenkins
 RUN cd && \
