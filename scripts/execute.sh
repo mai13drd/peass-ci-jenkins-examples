@@ -5,18 +5,22 @@ docker build -t slave ../files/slave
 
 cp ../files/master/casc.yaml ../jenkins_master_home
 
-mkdir -p ../jenkins_master_home/jobs/seed-job/workspace/dslScripts
+mkdir -p ../jenkins_master_home/jobs/demo-project
 mkdir -p ../jenkins_master_home/plugins
+
+cp -r ../files/slave/workspace ../jenkins_slave-1_home && \
+    cd ../jenkins_slave-1_home/workspace && \
+    tar -xf demo-project.tar.xz && \
+    rm demo-project.tar.xz && \
+    cd ../../scripts
 
 cp ../files/peass-ci.hpi ../jenkins_master_home/plugins
 
 #./installPeass.sh
 cp -r ../files/.m2 ../jenkins_master_home/.m2
 
-cp ../files/master/seed-job/config.xml ../jenkins_master_home/jobs/seed-job
-cp ../files/master/dslScripts/helloWorld.groovy ../jenkins_master_home/jobs/seed-job/workspace/dslScripts
+cp ../files/master/demo-project/config.xml ../jenkins_master_home/jobs/demo-project
 
-cp ../files/master/dslScripts/scriptApproval.xml ../jenkins_master_home
 cp ../files/master/credentials.xml ../jenkins_master_home
 
 docker run -d --name agent-1 --rm --volume $(pwd)/../jenkins_slave-1_home:/home/ubuntu/jenkins_home slave
