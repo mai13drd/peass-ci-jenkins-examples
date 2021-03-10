@@ -21,12 +21,6 @@ RUN  echo 'jenkins:jenkins' | chpasswd
 
 RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
-USER jenkins
-RUN cd && \
-    git clone https://github.com/dagere/peass && \
-    cd peass && \
-    mvn clean install -DskipTests
-
 USER root
 RUN service ssh start
 
