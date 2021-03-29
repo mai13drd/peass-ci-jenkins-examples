@@ -58,5 +58,18 @@ fi
 
 # If minor updates to the project occur, the version name may change
 #version=$(cat results/execute_demo-project.json | grep "versions" -A 1 | grep -v "version" | tr -d "\": {")
-version=$(cat $WORKSPACE/../peass-data/execute.json | grep "versions" -A 1 | grep -v "version" | tr -d "\": {")
-echo "Version: $version"
+VERSION=$(cat $WORKSPACE/../peass-data/execute.json | grep "versions" -A 1 | grep -v "version" | tr -d "\": {")
+echo "Version: $VERSION"
+
+#Check, if a slowdown is detected for innerMethod
+(
+	STATE=$(grep '"call" : "de.test.Callee#innerMethod",\|state' $WORKSPACE/../peass-data/visualization/$VERSION/de.test.CalleeTest_onlyCallMethod1.js | grep "innerMethod" -A 1 | grep '"state" : "SLOWER",' | grep -o 'SLOWER')
+	if [ "$STATE" != "SLOWER" ]
+	then
+		echo "State for de.test.Callee#innerMethod in de.test.CalleeTest_onlyCallMethod1.js has not the expected value SLOWER, but was $STATE!"
+		cat $WORKSPACE/../peass-data/visualization/$VERSION/de.test.CalleeTest_onlyCallMethod1.js
+		exit 1
+	else
+		echo "Slowdown is detected for innerMethod."
+	fi
+) && true
