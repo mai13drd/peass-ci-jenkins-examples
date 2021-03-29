@@ -1,3 +1,5 @@
+#!/bin/bash
+
 docker rm -f jenkins_master 
 docker rm -f agent-1 
 rm -rf ../jenkins_master_home/{*,.*}

@@ -33,3 +33,5 @@ This is a testproject for running peass-ci performance-measurements in a jenkins
 * You will see the configured pipeline-job "demo-pipeline", notice its pipeline script configuration.
 
 * If you start the build, jenkins will autonomous start a docker-container-image (node:14-alpine) and use it to build the demo-pipeline inside. This time, you have no performance measurements. There is just a shell-command executed which outputs the node-version of the node:14-alpine docker-container.
+
+* Since preparePipelineBuild.sh starts the jenkins-container as user root, you have to run cleanWorkspaces.sh as sudo now. So you will have the appropriate rights to delete folders and files in jenkins_master_home.
