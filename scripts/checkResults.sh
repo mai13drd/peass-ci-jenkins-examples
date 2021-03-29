@@ -40,3 +40,18 @@ then
 
 	exit 1
 fi
+
+#Check, if peass-data/changes.json contains the correct commit-SHA
+(
+    #test_sha=$(grep -A1 'versionChanges" : {' results/changes_demo-project.json | grep -v '"versionChanges' | grep -Po '"\K.*(?=")')
+	TEST_SHA=$(grep -A1 'versionChanges" : {'  $WORKSPACE/../peass-data/changes.json | grep -v '"versionChanges' | grep -Po '"\K.*(?=")')
+	if [ "$RIGHT_SHA" != "$TEST_SHA" ]
+	then
+		echo "commit-SHA is not equal to the SHA in peass-data/changes.json!"
+		#cat results/statistics/demo-project.json
+		cat $WORKSPACE/../peass-data/changes.json
+		exit 1
+	else
+		echo "peass-data/changes.json contains the correct commit-SHA."
+	fi
+) && true
