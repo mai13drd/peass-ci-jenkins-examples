@@ -21,18 +21,15 @@ This is a testproject for running peass-ci performance-measurements in a jenkins
 
 * Build the demo-project to measure differences in performance between the last two commits.
 
-### Build demo-project on agent-1 node (still fails currently)
-
+### Build demo-pipeline in a docker-agent
 * If you ran the above steps before, you should clean the workspace of master! Use cleanWorkspaces.sh for that.
 
-* Run execute.sh to build and start jenkins_master- and slave-container. Notice the shown IP of the slave-container.
+* Run preparePipelineBuild.sh to build and start jenkins_master-container.
 
 * Wait until jenkins is fully started (check, if http://localhost:8080 can be loaded).
 
 * Login to jenkins (same credentials as above).
 
-* You should see the seed-job (which is already built at jenkins-startup) and the demo-project, which was built by the seed-job but is not built itself yet.
+* You will see the configured pipeline-job "demo-pipeline", notice its pipeline script configuration.
 
-* Configure a peass-ci buildstep, everything else is configured already.
-
-* Run createNode.sh with the shown IP of slave-container as parameter. This will create node agent-1 in jenkins. The build of demo-project is triggered, as soon as agent-1 is online.
+* If you start the build, jenkins will autonomous start a docker-container-image (node:14-alpine) and use it to build the demo-pipeline inside. This time, you have no performance measurements. There is just a shell-command executed which outputs the node-version of the node:14-alpine docker-container.
