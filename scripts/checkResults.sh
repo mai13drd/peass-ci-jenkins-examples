@@ -55,3 +55,8 @@ fi
 		echo "peass-data/changes.json contains the correct commit-SHA."
 	fi
 ) && true
+
+# If minor updates to the project occur, the version name may change
+#version=$(cat results/execute_demo-project.json | grep "versions" -A 1 | grep -v "version" | tr -d "\": {")
+version=$(cat $WORKSPACE/../peass-data/execute.json | grep "versions" -A 1 | grep -v "version" | tr -d "\": {")
+echo "Version: $version"
