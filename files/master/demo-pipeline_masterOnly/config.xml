@@ -36,7 +36,7 @@
     }
 
     post {
-        always {
+        success {
             sh &apos;../peass-ci_scripts/checkResults.sh&apos;
         }
     }
