@@ -2,8 +2,9 @@
 
 docker build -t jenkins_master ../files/master
 
-mkdir -p ../jenkins_master_home/jobs/demo-pipeline_masterOnly
+mkdir -p ../jenkins_master_home/jobs/demo-pipeline_masterOnly/peass-ci_scripts
 cp ../files/master/casc.yaml ../jenkins_master_home
+cp checkResults.sh ../jenkins_master_home/jobs/demo-pipeline_masterOnly/peass-ci_scripts
 
 mkdir -p ../jenkins_master_home/plugins
 cp ../files/peass-ci.hpi ../jenkins_master_home/plugins
