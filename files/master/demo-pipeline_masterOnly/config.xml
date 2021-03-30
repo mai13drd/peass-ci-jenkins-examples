@@ -34,6 +34,12 @@
             }
         }
     }
+
+    post {
+        always {
+            sh &apos;../peass-ci_scripts/checkResults.sh&apos;
+        }
+    }
 }</script>
     <sandbox>true</sandbox>
   </definition>
