@@ -26,7 +26,7 @@ This will execute a build on a Jenkins server running inside a Docker container
 
 * Clean the workspace of Jenkins controller using *cleanControllerWorkspace.sh*.
 
-### Build testproject in a manually started Jenkins agent
+### Build testproject in a manually registered Jenkins agent
 This will execute a build inside a Jenkins agent. Therefore, next to the Docker container for the Jenkins controller, a second one is started and manually registered to Jenkins as build-agent.
 
 * Move to folder *buildOnAgentManually*.
@@ -34,6 +34,8 @@ This will execute a build inside a Jenkins agent. Therefore, next to the Docker 
 * Execute *buildOnAgentManually.sh*. After that, two Docker containers are running, named *jenkins_controller* and *jenkins_agent-1*. Notice the shown IP of *jenkins_agent-1*!
 
 * Wait until jenkins is fully started (means http://localhost:8080 can be loaded) and log in.
+
+* You will see, that a pipeline-project named *buildOnAgentManually* is configured.
 
 * Run *registerAgentToMaster.sh* with the shown IP of *jenkins_agent-1* as parameter. This will register *jenkins_agent-1* as build agent.
 
