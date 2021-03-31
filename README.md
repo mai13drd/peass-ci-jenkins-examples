@@ -1,42 +1,25 @@
-# jenkinsPipeline
+# Peass-CI sample usage project
 
-This is a testproject for running peass-ci performance-measurements in a jenkins docker-container.
+This project provides several examples for the usage of the [Peass-CI-Plugin](https://github.com/DaGeRe/peass-ci). 
 
-<br>
+## Overview
+This project demonstrates the usage of the [Peass-CI-Plugin](https://github.com/DaGeRe/peass-ci) on a Jenkins server. The plugin can be used to detect performance differences and their potentially causes between different versions of a Java project. Therefore, the Jenkins server executes a pipeline-build of the Java project, measuring its performance.
+Each example uses the [demo-with-jenkinsfile](https://github.com/DaGeRe/demo-with-jenkinsfile) as the testproject. The Jenkins server will execute the build according to the testprojects Jenkinsfile. In the Jenkinsfile the parameters of the perfomance measurements are configured.
 
-## Setup
+## General Approach
+All examples run Jenkins inside a Docker container. Scripts are provided to build/configure and start the container. Also a Jenkins pipeline job is configured and will be built, as soon as Jenkins is online.
 
-* All scripts has to be run from inside scripts-folder!
+## Important
+Each example has its own folder. Make sure to always run the appropriate scripts from the appropriate folder! Before executing another example, don't forget to cleanup the Jenkins workspace! Therefore a script is provided for each example. <br>
+To login to Jenkins on http://localhost:8080, enter *admin* as user and *123* as password.
 
-### Build demo-project on jenkins_master
-* Run buildOnMasterOnly.sh to build and start jenkins_master-container.
+### Build testproject on Jenkins controller
+This will execute a build on a Jenkins server running inside a Docker container
 
-* Wait until jenkins_master-container is fully started (check, if http://localhost:8080 can be loaded).
+* Move to folder *buildOnController* and execute *buildOnController.sh*. After that, a Docker container named *jenkins_controller* is running.
 
-* Login to jenkins on http://localhost:8080:<br>
-    user: admin<br>
-    password: 123
+* After Jenkins is fully started (means http://localhost:8080 can be loaded), you can login.
 
-* You should see the job "demo-project" which clones github.com/mai13drd/demo-project and has already a peass-ci buildstep configured.
+* You will see, that a pipeline-project named *buildOnController* is configured and a build is already running.
 
-* Build the demo-project to measure differences in performance between the last two commits.
-
-### Build demo-pipeline_masterOnly
-* This step will perform a pipeline-build.
-
-* If you ran the above steps before, you should clean the workspace of master! Use cleanWorkspaces.sh for that.
-
-* Run preparePipelineBuild_MasterOnly.sh to build and start jenkins_master-container.
-
-* Wait until jenkins is fully started (check, if http://localhost:8080 can be loaded).
-
-* Login to jenkins (same credentials as above).
-
-* You will see the configured pipeline-job "demo-pipeline_masterOnly".
-
-* Notice the jobs pipeline-script-configuration:
-    * First, the job will clone a test-project.
-    * In stage('Test') measurement parameters are configured.
-    * In a post-step, the script checkResults.sh is executed. This will perform some checks on the measurement-results.
-
-* Since preparePipelineBuild_MasterOnly.sh starts the jenkins-container as user root, you have to run cleanWorkspaces.sh with sudo now! So you will have the appropriate rights to delete folders and files in jenkins_master_home.
+* If the build is finished, you can check the builds dashboard. You will find informations about performance changes and their possibly causes.
