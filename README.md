@@ -4,10 +4,10 @@ This project provides several examples for the usage of the [Peass-CI-Plugin](ht
 
 ## Overview
 This project demonstrates the usage of the [Peass-CI-Plugin](https://github.com/DaGeRe/peass-ci) on a Jenkins server. The plugin can be used to detect performance differences and their potentially causes between different versions of a Java project. Therefore, the Jenkins server executes a pipeline-build of the Java project, measuring its performance.
-Each example uses the [demo-with-jenkinsfile](https://github.com/DaGeRe/demo-with-jenkinsfile) as the testproject. The Jenkins server will execute the build according to the testprojects Jenkinsfile. In the Jenkinsfile the parameters of the perfomance measurements are configured.
+Each example uses the [demo-with-jenkinsfile](https://github.com/DaGeRe/demo-with-jenkinsfile) as the testproject.
 
 ## General Approach
-All examples run Jenkins inside a Docker container. Scripts are provided to build/configure and start the container. Also a Jenkins pipeline job is configured and will be built, as soon as Jenkins is online.
+All examples run Jenkins inside a Docker container. Scripts are provided to build/configure and start the container(s). Also a Jenkins pipeline-job is configured by copying a *config.xml* to its appropriate folder in Jenkins. The *config.xml* defines the jobs pipeline in which the parameters of the performance measurements are set.
 
 ## Important
 Each example has its own folder. Make sure to always run the appropriate scripts from the appropriate folder! Before executing another example, don't forget to cleanup the Jenkins workspace! Therefore a script is provided for each example. <br>
@@ -22,4 +22,4 @@ This will execute a build on a Jenkins server running inside a Docker container
 
 * You will see, that a pipeline-project named *buildOnController* is configured and a build is already running.
 
-* If the build is finished, you can check the builds dashboard. You will find informations about performance changes and their possibly causes.
+* If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
