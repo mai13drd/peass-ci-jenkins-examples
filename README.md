@@ -44,3 +44,19 @@ This will execute a build inside a Jenkins agent. Therefore, next to the Docker 
 * If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
 
 * Clean the workspaces of Jenkins controller and agent using *cleanWorkspaces.sh*.
+
+### Build testproject in an agent automatically started by Jenkins controller
+
+This will execute a build inside a Jenkins agent. The agent is started by Jenkins controller. The pipeline is configured to pull the Docker image "maven:3.6.3-jdk-11" and use it as build agent.
+
+* Move to folder *buildOnAgentAutomatic*.
+
+* Execute *buildOnAgentAutomatic.sh*. After that, a Docker container named *jenkins_controller* is running.
+
+* After Jenkins is fully started (means http://localhost:8080 can be loaded), you can log in.
+
+* You will see, that a pipeline-project named *buildOnAgentAutomatic* is configured and a build is already running.
+
+* If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
+
+* Since *buildOnAgentAutomatic.sh* starts the Jenkins-container as user root, you have to run *cleanControllerWorkspace.sh* with sudo now! So you will have the appropriate rights to delete folders and files in jenkins_controller_home.
