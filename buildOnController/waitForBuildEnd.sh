@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 #Give jenkins some time to startup and start building
 echo 'Waiting for jenkins startup...'
 sleep 20

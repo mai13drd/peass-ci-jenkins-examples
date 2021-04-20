@@ -9,8 +9,13 @@ Each example uses the [demo-with-jenkinsfile](https://github.com/DaGeRe/demo-wit
 ## General Approach
 All examples run Jenkins inside a Docker container. Scripts are provided to build/configure and start the container(s). Also a Jenkins pipeline-job is configured by copying a *config.xml* to its appropriate folder in Jenkins. The *config.xml* defines the jobs pipeline in which the parameters of the performance measurements are set.
 
+The project is build on github-actions with Java 8, 11 and 15. In the *.github/workflows/measure.yml* you will find the jobs and buildsteps which are executed. At this point, there is only the *buildOnController*-job build at github. It includes the three steps *Build and run container*, *Wait for build end* and *Check results*. So after the measurements are started, it is waited for their end and measurement-results are checked afterwards.
+
 ## Important
-Each example has its own folder. Make sure to always run the appropriate scripts from the appropriate folder! Before executing another example, don't forget to cleanup the Jenkins workspace! Therefore a script is provided for each example. <br>
+Each example has its own folder. Make sure to always run the appropriate scripts from the appropriate folder!
+
+Before executing another example, don't forget to cleanup the Jenkins workspace! Therefore a script is provided for each example. Run the cleanup-scripts with sudo, since the containers are started as user root!
+
 To log in to Jenkins on http://localhost:8080, enter *admin* as user and *123* as password.
 
 ### Build testproject on Jenkins controller
@@ -23,6 +28,8 @@ This will execute a build on a Jenkins server running inside a Docker container
 * You will see, that a pipeline-project named *buildOnController* is configured and a build is already running.
 
 * If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
+
+* You can also run *checkResults.sh* afterwards, to check if measurement-results are as expected. Running *buildWaitCheckResults.sh* will run all the same steps as on github-actions, as described in section *General Approach*.
 
 * Clean the workspace of Jenkins controller using *cleanControllerWorkspace.sh*.
 
