@@ -12,3 +12,5 @@ cp config.xml ../jenkins_controller_home/jobs/buildOnController
 
 docker run -d --name jenkins_controller --rm --publish 8080:8080 --volume $(pwd)/../jenkins_controller_home:/var/jenkins_home \
     --env JENKINS_ADMIN_ID=admin --env JENKINS_ADMIN_PASSWORD=123 jenkins_controller
+
+./waitForBuildEnd.sh
