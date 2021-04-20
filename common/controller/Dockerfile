@@ -18,6 +18,3 @@ USER jenkins
 
 # Standard SSH port
 EXPOSE 22
-
-# Avoid container be stopped immediately after startup in github-actions
-ENTRYPOINT tail -f /dev/null
