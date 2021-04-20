@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 docker build -t jenkins_controller ../common/controller
 
 cp ../common/controller/casc.yaml ../jenkins_controller_home
