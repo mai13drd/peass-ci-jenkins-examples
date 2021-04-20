@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -e
 
 online=1
 while [ $online -ne 0 ]
