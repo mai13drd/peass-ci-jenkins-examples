@@ -2,10 +2,6 @@
 
 set -e
 
-#Give jenkins some time to startup and start building
-echo 'Waiting for jenkins startup...'
-sleep 20
-
 building=true
 while [ "$building" = true ]
 do
@@ -14,4 +10,6 @@ do
     echo 'Jenkins is still building...'
 done
 
+echo "------------------------------------"
 echo 'Jenkins finished building.'
+echo "------------------------------------"

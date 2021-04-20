@@ -37,6 +37,8 @@ jobs:
         java-version: ${{ matrix.java }}
     - name: Build and run container
       run: ./buildOnController.sh
+    - name: Wait for jenkins startup
+      run: ./waitForJenkinsStartup.sh
     - name: Wait for build end
       run: ./waitForBuildEnd.sh
     - name: Check results
