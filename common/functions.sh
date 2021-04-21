@@ -27,9 +27,11 @@ waitForBuildEnd () {
     command="echo 'println(jenkins.model.Jenkins.instance''.getItem(\"$1\").lastBuild.building)' | java -jar ../common/jenkins-cli.jar -s \
             http://localhost:8080 -auth admin:123 groovy ="
 
-    while [ $(eval $command) ]
+    building=true
+    while [ "$building" = true ]
     do
         sleep 5
+	    building=$(eval $command)
         echo 'Jenkins is still building...'
     done
 
