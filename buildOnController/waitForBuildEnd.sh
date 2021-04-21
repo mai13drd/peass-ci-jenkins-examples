@@ -3,4 +3,4 @@
 set -e
 
 source ../common/functions.sh
-waitForBuildEnd "buildOnAgentManually"
+waitForBuildEnd "buildOnController"
