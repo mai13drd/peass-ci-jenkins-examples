@@ -75,7 +75,7 @@ checkResults () {
     fi
 
     #Check, if peass-data/changes.json contains the correct commit-SHA
-    TEST_SHA=$(grep -A1 'versionChanges" : {'  $JOBFOLDER/peass-data/changes.json | grep -v '"versionChanges' | grep -Po '"\K.*(?=")')
+    TEST_SHA=$(grep -A1 'versionChanges" : {' $JOBFOLDER/peass-data/changes.json | grep -v '"versionChanges' | grep -Po '"\K.*(?=")')
     if [ "$RIGHT_SHA" != "$TEST_SHA" ]
     then
 	    echo "commit-SHA is not equal to the SHA in peass-data/changes.json!"
@@ -90,7 +90,7 @@ checkResults () {
     echo "Version: $VERSION"
 
     #Check, if a slowdown is detected for innerMethod
-    STATE=$(grep '"call" : "de.test.Callee#innerMethod",\|state' $JOBFOLDER/peass-data/visualization/$VERSION/de.test.CalleeTest_onlyCallMethod1.js | grep "innerMethod" -A 1 | grep '"state" :    "SLOWER",' | grep -o 'SLOWER')
+    STATE=$(grep '"call" : "de.test.Callee#innerMethod",\|state' $JOBFOLDER/peass-data/visualization/$VERSION/de.test.CalleeTest_onlyCallMethod1.js | grep "innerMethod" -A 1 | grep '"state" : "SLOWER",' | grep -o 'SLOWER')
     if [ "$STATE" != "SLOWER" ]
     then
 	    echo "State for de.test.Callee#innerMethod in de.test.CalleeTest_onlyCallMethod1.js has not the expected value SLOWER, but was $STATE!"
