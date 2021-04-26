@@ -74,3 +74,12 @@ then
 else
     echo "Slowdown is detected for innerMethod."
 fi
+
+sourceMethodLine=$(grep "de.test.Callee.method1_" $JOBFOLDER/peass-data/visualization/$VERSION/de.test.CalleeTest_onlyCallMethod1.js -A 3 | head -n 3 | grep innerMethod)
+if [[ "$sourceMethodLine" != *"innerMethod();" ]]
+then
+    echo "Line could not be detected - source reading probably failed."
+    echo "Line: "
+    echo $sourceMethodLine
+    exit 1
+fi
