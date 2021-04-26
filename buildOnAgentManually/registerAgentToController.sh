@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IP=$1
+IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' jenkins_agent-1)
 
 cat <<EOF | java -jar ../common/jenkins-cli.jar -s "http://localhost:8080" -auth admin:123 create-node jenkins_agent-1
 <slave>
@@ -11,7 +11,7 @@ cat <<EOF | java -jar ../common/jenkins-cli.jar -s "http://localhost:8080" -auth
   <mode>NORMAL</mode>
   <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
   <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.31.5">
-    <host>$1</host>
+    <host>$IP</host>
     <port>22</port>
     <credentialsId>jenkins_agent-1_credentials</credentialsId>
     <launchTimeoutSeconds>60</launchTimeoutSeconds>
