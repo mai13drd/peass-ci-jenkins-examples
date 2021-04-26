@@ -48,3 +48,18 @@ then
 
     exit 1
 fi
+
+#Check, if peass-data/changes.json contains the correct commit-SHA
+TEST_SHA=$(grep -A1 'versionChanges" : {' $JOBFOLDER/peass-data/changes.json | grep -v '"versionChanges' | grep -Po '"\K.*(?=")')
+if [ "$RIGHT_SHA" != "$TEST_SHA" ]
+then
+    echo "commit-SHA is not equal to the SHA in peass-data/changes.json!"
+    cat $JOBFOLDER/peass-data/changes.json
+    exit 1
+else
+    echo "peass-data/changes.json contains the correct commit-SHA."
+fi
+
+# If minor updates to the project occur, the version name may change
+VERSION=$(cat $JOBFOLDER/peass-data/execute.json | grep "versions" -A 1 | grep -v "version" | tr -d "\": {")
+echo "Version: $VERSION"
