@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 docker build -t jenkins_controller ../common/controller
 docker build -t jenkins_agent ../common/agent
 
