@@ -2,7 +2,7 @@
 
 set -e
 
-JOBFOLDER="$(pwd)/../jenkins_controller_home/jobs/$1"
+JOBFOLDER="$(pwd)/../jenkins_controller_home/jobs/buildOnAgentManually"
 WORKSPACE="$(pwd)/../jenkins_agent-1_home/workspace"
 
 RIGHT_SHA="$(cd $WORKSPACE/buildOnAgentManually && git rev-parse HEAD)"
