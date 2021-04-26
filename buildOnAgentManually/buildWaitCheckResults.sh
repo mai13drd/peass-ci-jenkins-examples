@@ -4,6 +4,6 @@
 ./waitForJenkinsStartup.sh
 ./registerAgentToController.sh
 #wait some time until jenkins_agent-1 is online and build is started
-sleep 5
+sleep 10
 ./waitForBuildEnd.sh
 ./checkResults.sh
