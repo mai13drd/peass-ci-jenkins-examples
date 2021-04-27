@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 JOBFOLDER="$(pwd)/../jenkins_controller_home/jobs/buildOnAgentManually"
 WORKSPACE="$(pwd)/../jenkins_agent-1_home/workspace"
 
