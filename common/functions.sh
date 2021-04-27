@@ -1,8 +1,5 @@
 waitForJenkinsStartup () {
 
-    #Avoid exit on error if jenkins is not started yet
-    set +e
-
     command="{ echo 'println(jenkins.model.Jenkins.instance''.getItem(\"$1\"))' | java -jar ../common/jenkins-cli.jar -s \
         http://localhost:8080 -auth admin:123 groovy =; } &>/dev/null"
 
@@ -14,8 +11,6 @@ waitForJenkinsStartup () {
         eval $command
         online=$?
     done
-
-    set -e
 
     echo "------------------------------------"
     echo "Jenkins is fully started."
