@@ -29,7 +29,7 @@ This will execute a build on a Jenkins server running inside a Docker container
 
 * If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
 
-* You can also run *checkResults.sh* afterwards, to check if measurement-results are as expected.
+* You can run *checkResults.sh* afterwards, to check if measurement-results are as expected.
 
 * Running *buildWaitCheckResults.sh* will run all the steps executed at github-actions, as described in section *General Approach*. So instead of running each single step on its own, you can also execute *buildWaitCheckResults.sh*.
 
@@ -40,17 +40,21 @@ This will execute a build inside a Jenkins agent. Therefore, next to the Docker 
 
 * Move to folder *buildOnAgentManually*.
 
-* Execute *buildOnAgentManually.sh*. After that, two Docker containers are running, named *jenkins_controller* and *jenkins_agent-1*. Notice the shown IP of *jenkins_agent-1*!
+* Execute *buildOnAgentManually.sh*. After that, two Docker containers are running, named *jenkins_controller* and *jenkins_agent-1*.
 
 * Wait until jenkins is fully started (means http://localhost:8080 can be loaded) and log in.
 
 * You will see, that a pipeline-project named *buildOnAgentManually* is configured.
 
-* Run *registerAgentToMaster.sh* with the shown IP of *jenkins_agent-1* as parameter. This will register *jenkins_agent-1* as build agent.
+* Run *registerAgentToController.sh*. This will register *jenkins_agent-1* as build agent.
 
 * As soon as *jenkins_agent-1* is online in Jenkins, the build will start.
 
 * If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
+
+* You can run *checkResults.sh* afterwards, to check if measurement-results are as expected.
+
+* Running *buildWaitCheckResults.sh* will run all the steps as described above. So instead of running each single step on its own, you can also execute *buildWaitCheckResults.sh*.
 
 * Clean the workspaces of Jenkins controller and agent using *cleanWorkspaces.sh*.
 
