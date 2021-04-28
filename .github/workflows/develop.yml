@@ -6,17 +6,17 @@ name: Develop
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ SetupBuildOnAgentManually ]
+    branches: [ setupBuildOnController ]
   pull_request:
-    branches: [ SetupBuildOnAgentManually ]
+    branches: [ setupBuildOnController ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    branches: [ SetupBuildOnAgentManually ]
+    branches: [ setupBuildOnController ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This job starts a Jenkins server running inside a Docker container and builds the testproject
-  buildOnAgentManually:
+  buildOnController:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     strategy:
@@ -26,7 +26,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: buildOnAgentManually
+        working-directory: buildOnController
 
     steps:
     - name: Check out code
@@ -35,12 +35,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
-    - name: Build and run containers
-      run: ./buildOnAgentManually.sh
+    - name: Build and run container
+      run: ./buildOnController.sh
     - name: Wait for jenkins startup
       run: ./waitForJenkinsStartup.sh
-    - name: Register agent to controller
-      run: ./registerAgentToController.sh
     - name: Wait for build end
       run: ./waitForBuildEnd.sh
     - name: Check results
