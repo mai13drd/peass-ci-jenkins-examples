@@ -47,7 +47,7 @@ checkResults () {
     if [ ! -f $PEASS_DATA/execute.json ]
     then
         WORKSPACE="workspace_peass"
-        if [ $1="buildOnAgentManually" ]
+        if [ $1 == "buildOnAgentManually" ]
         then
             WORKSPACE=$1"_peass"
         fi
