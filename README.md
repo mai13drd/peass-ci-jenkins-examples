@@ -9,7 +9,7 @@ Each example uses the [demo-with-jenkinsfile](https://github.com/DaGeRe/demo-wit
 ## General Approach
 All examples run Jenkins inside a Docker container. Scripts are provided to build/configure and start the container(s). Also a Jenkins pipeline-job is configured by copying a *config.xml* to its appropriate folder in Jenkins. The *config.xml* defines the jobs pipeline in which the parameters of the performance measurements are set.
 
-The project is build on github-actions with Java 8, 11 and 15. In the *.github/workflows/measure.yml* you will find the jobs and buildsteps which are executed. At this point, only the *buildOnController*-job is built at github. It includes the four steps *Build and run container*, *Wait for jenkins startup*, *Wait for build end* and *Check results*. So after the measurements are started, it is waited for their end and measurement-results are checked afterwards.
+Two YAML-files in *.github/workflows* configure *buildOnController* and *buildOnAgentAutomatic* to be built on github-actions with Java 8, 11 and 15. They include the four steps *Build and run container*, *Wait for jenkins startup*, *Wait for build end* and *Check results*. So after the measurements are started, it is waited for their end and measurement-results are checked afterwards.
 
 ## Important
 Each example has its own folder. Make sure to always run the appropriate scripts from the appropriate folder!
@@ -72,4 +72,8 @@ This will execute a build inside a Jenkins agent. The agent is started by Jenkin
 
 * If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
 
-* Since *buildOnAgentAutomatic.sh* starts the Jenkins-container as user root, you have to run *cleanControllerWorkspace.sh* with sudo now! So you will have the appropriate rights to delete folders and files in jenkins_controller_home.
+* You can run *checkResults.sh* afterwards, to check if measurement-results are as expected.
+
+* Running *buildWaitCheckResults.sh* will run all the steps as described above. So instead of running each single step on its own, you can also execute *buildWaitCheckResults.sh*.
+
+* Clean the workspace of Jenkins controller using *cleanControllerWorkspace.sh*.
