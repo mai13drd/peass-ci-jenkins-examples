@@ -28,7 +28,7 @@
     stages {
         stage(&apos;clone&apos;) {
             steps {
-                git url: &apos;https://github.com/mai13drd/demo-with-jenkinsfile&apos;
+                git url: &apos;https://github.com/dagere/demo-with-jenkinsfile&apos;
             }
         }
         stage(&apos;test&apos;) {
