@@ -40,20 +40,21 @@ checkResults () {
     PEASS_DATA=$(pwd)/../jenkins_controller_home/jobs/$1/peass-data
 
     # If minor updates to the project occur, the version name may change
-    VERSION=$(cat $PEASS_DATA/execute.json | grep "versions" -A 1 | grep -v "version" | tr -d "\": {")
-    echo "Version: $VERSION"
-    PREVIOUS_VERSION="$VERSION~1"
+    VERSION="b02c92af73e3297be617f4c973a7a63fb603565b"
+    PREVIOUS_VERSION="e80d8a1bf747d1f70dc52260616b36cac9e44561"
 
-    if [ ! -f $PEASS_DATA/execute.json ]
+    WORKSPACE="workspace_peass"
+    EXECUTE_FILE=$PEASS_DATA/execute_workspace.json
+    if [ $1 == "buildOnAgentManually" ]
     then
-        WORKSPACE="workspace_peass"
-        if [ $1 == "buildOnAgentManually" ]
-        then
-            WORKSPACE=$1"_peass"
-        fi
+        WORKSPACE=$1"_peass"
+        EXECUTE_FILE=$PEASS_DATA/execute_$1.json
+    fi
 
+    if [ ! -f $EXECUTE_FILE ]
+    then
         echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        echo "$PEASS_DATA/execute.json could not be found!"
+        echo "$EXECUTE_FILE could not be found!"
         echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 
         echo "Main Logs:"
@@ -61,18 +62,22 @@ checkResults () {
 
 	    echo "projektTemp:"
 	    ls $PEASS_DATA/$WORKSPACE/projectTemp/
-        ls $PEASS_DATA/$WORKSPACE/projectTemp/1_peass/
-        ls $PEASS_DATA/$WORKSPACE/projectTemp/1_peass/logs/
+
+        echo "projectTemp/tree_"$VERSION"_peass:"
+        ls $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$VERSION"_peass/
+
+        echo "projectTemp/tree_"$PREVIOUS_VERSION"_peass:"
+        ls $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$PREVIOUS_VERSION"_peass/
 
         echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        echo "cat $PEASS_DATA/$WORKSPACE/projectTemp/1_peass/logs/$PREVIOUS_VERSION/*/*"
+        echo "cat $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$VERSION"_peass/logs/$VERSION/*/*"
         echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        cat $PEASS_DATA/$WORKSPACE/projectTemp/1_peass/logs/$PREVIOUS_VERSION/*/*
+        cat $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$VERSION"_peass/logs/$VERSION/*/*
 
         echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        echo "cat $PEASS_DATA/$WORKSPACE/projectTemp/1_peass/logs/$VERSION/*/*"
+        echo "cat $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$PREVIOUS_VERSION"_peass/logs/$PREVIOUS_VERSION/*/*"
         echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        cat $PEASS_DATA/$WORKSPACE/projectTemp/1_peass/logs/$VERSION/*/*
+        cat $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$PREVIOUS_VERSION"_peass/logs/$PREVIOUS_VERSION/*/*
 
 	    exit 1
     fi
