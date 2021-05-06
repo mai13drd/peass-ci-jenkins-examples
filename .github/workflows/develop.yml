@@ -6,12 +6,12 @@ name: Develop
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ SetupBuildOnAgentManually ]
+    branches: [ setupBuildOnController ]
   pull_request:
-    branches: [ SetupBuildOnAgentManually ]
+    branches: [ setupBuildOnController ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    branches: [ SetupBuildOnAgentManually ]
+    branches: [ setupBuildOnController ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
