@@ -6,7 +6,7 @@ cd ../common
 
 git clone https://github.com/dagere/peass && \
     cd peass && \
-    mvn clean install -DskipTests
+    mvn clean install -pl dependency,measurement,analysis -DskipTests
 
 cd ..
 
