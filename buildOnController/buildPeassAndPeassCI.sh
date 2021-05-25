@@ -6,11 +6,11 @@ cd ../common
 
 git clone https://github.com/dagere/peass && \
     cd peass && \
-    mvn clean install -pl dependency,measurement,analysis -DskipTests
+    ./mvnw clean install -pl dependency,measurement,analysis -DskipTests
 
 cd ..
 
 git clone https://github.com/dagere/peass-ci && \
     cd peass-ci && \
-    mvn clean -B package --file pom.xml -DskipTests
+    ./mvnw clean -B package --file pom.xml -DskipTests
 
