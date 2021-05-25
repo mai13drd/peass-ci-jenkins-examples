@@ -4,7 +4,7 @@ set -e
 
 cd ../common
 
-git clone --branch develop https://github.com/dagere/peass && \
+git clone https://github.com/dagere/peass && \
     cd peass && \
     ./mvnw clean install -pl dependency,measurement,analysis -DskipTests
 
