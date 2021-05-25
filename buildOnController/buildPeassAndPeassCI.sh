@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+cd ../common
+
+git clone https://github.com/dagere/peass && \
+    cd peass && \
+    mvn clean install -DskipTests
+
+cd ..
+
+git clone https://github.com/dagere/peass-ci && \
+    cd peass-ci && \
+    mvn clean -B package --file pom.xml -DskipTests
+

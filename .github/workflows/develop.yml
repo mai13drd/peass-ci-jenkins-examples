@@ -35,6 +35,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
+    - name: Build peass and peass-ci
+      run: ./buildPeassAndPeassCI.sh
     - name: Build and run container
       run: ./buildOnController.sh
     - name: Wait for jenkins startup
