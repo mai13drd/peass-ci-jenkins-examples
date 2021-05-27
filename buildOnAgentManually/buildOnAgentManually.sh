@@ -13,6 +13,8 @@ cp ../common/peass-ci/target/peass-ci.hpi ../jenkins_controller_home/plugins
 mkdir -p ../jenkins_controller_home/jobs/buildOnAgentManually
 cp config.xml ../jenkins_controller_home/jobs/buildOnAgentManually
 
+tar -xf ../common/demo-project.tar.xz --directory ../jenkins_controller_home/jobs/buildOnAgentManually
+
 cp credentials.xml ../jenkins_controller_home/
 
 docker run -d --name jenkins_agent-1 --rm \
