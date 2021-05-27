@@ -8,7 +8,7 @@ docker build -t jenkins_agent ../common/agent
 cp ../common/controller/casc.yaml ../jenkins_controller_home
 
 mkdir -p ../jenkins_controller_home/plugins
-cp ../common/peass-ci.hpi ../jenkins_controller_home/plugins
+cp ../common/peass-ci/target/peass-ci.hpi ../jenkins_controller_home/plugins
 
 mkdir -p ../jenkins_controller_home/jobs/buildOnAgentManually
 cp config.xml ../jenkins_controller_home/jobs/buildOnAgentManually
