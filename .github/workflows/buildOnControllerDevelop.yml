@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build on controller with peass(ci)-develop
+name: Build on controller with peass(-ci)-develop
 
 # Controls when the action will run. 
 on:
@@ -18,7 +18,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This job starts a Jenkins server running inside a Docker container and builds the testproject
-  buildOnController:
+  buildOnControllerDevelop:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     strategy:
@@ -37,7 +37,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
-    - name: Build peass and peass-ci
+    - name: Build peass(-ci)-develop
       run: ../common/scripts/buildPeassAndPeassCI-develop.sh
     - name: Build and run container
       run: ./buildOnController.sh

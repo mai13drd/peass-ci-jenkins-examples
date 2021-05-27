@@ -1,22 +1,24 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Develop
+name: Build on agent automatic with peass(-ci)-develop
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ setupBuildOnController ]
+    branches: [ main ]
   pull_request:
-    branches: [ setupBuildOnController ]
+    branches: [ main ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    branches: [ setupBuildOnController ]
+    branches: [ main ]
+  schedule:
+    - cron: "0 3 * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This job starts a Jenkins server running inside a Docker container and builds the testproject
-  buildOnController:
+  buildOnAgentAutomaticDevelop:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     strategy:
@@ -26,7 +28,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: buildOnController
+        working-directory: buildOnAgentAutomatic
 
     steps:
     - name: Check out code
@@ -35,10 +37,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
-    - name: Build peass and peass-ci
-      run: ./buildPeassAndPeassCI.sh
+    - name: Build peass(-ci)-develop
+      run: ../common/scripts/buildPeassAndPeassCI-develop.sh
     - name: Build and run container
-      run: ./buildOnController.sh
+      run: ./buildOnAgentAutomatic.sh
     - name: Wait for jenkins startup
       run: ./waitForJenkinsStartup.sh
     - name: Wait for build end
