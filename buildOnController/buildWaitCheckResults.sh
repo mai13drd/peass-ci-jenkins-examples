@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./buildPeassAndPeassCI.sh
+../common/scripts/buildPeassAndPeassCI.sh
 ./buildOnController.sh
 ./waitForJenkinsStartup.sh
 ./waitForBuildEnd.sh
