@@ -1,17 +1,17 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build on controller with peass-develop
+name: Build on controller with peass(ci)-develop
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ buildWithPeassDevelop ]
+    branches: [ main ]
   pull_request:
-    branches: [ buildWithPeassDevelop ]
+    branches: [ main ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    branches: [ buildWithPeassDevelop ]
+    branches: [ main ]
   schedule:
     - cron: "0 3 * * *"
 
@@ -38,7 +38,7 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
     - name: Build peass and peass-ci
-      run: ./buildPeassAndPeassCI.sh
+      run: ../common/scripts/buildPeassAndPeassCI-develop.sh
     - name: Build and run container
       run: ./buildOnController.sh
     - name: Wait for jenkins startup
