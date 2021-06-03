@@ -13,15 +13,15 @@ The YAML-files in *.github/workflows* configure jobs to be built on github-actio
 
 At the moment four jobs exist:
 
-* buildOnAgentAutomatic
-
-* buildOnAgentAutomaticDevelop
-
 * buildOnController
 
 * buildOnControllerDevelop
 
-So *buildOnController* and *buildOnAgentAutomatic* are built on github. Also both examples are built using the development-branches of *Peass* and *Peass-CI* respectively.
+* buildOnJenkinsStartedAgent
+
+* buildOnJenkinsStartedAgentDevelop
+
+So *buildOnController* and *buildOnJenkinsStartedAgent* are built on github. Also both examples are built using the development-branches of *Peass* and *Peass-CI* respectively.
 
 ## Important
 Each example has its own folder. Make sure to always run the appropriate scripts from the appropriate folder!
@@ -58,15 +58,15 @@ This will execute a build inside a Jenkins agent. Therefore, next to the Docker 
 
 Unfortunately this does not work at the moment!
 
-* Move to folder *buildOnAgentManually*.
+* Move to folder *buildOnManuallyStartedAgent*.
 
 * Execute *../common/scripts/buildPeassAndPeassCI.sh* or *../common/scripts/buildPeassAndPeassCI-develop.sh* respectively.
 
-* Execute *buildOnAgentManually.sh*. After that, two Docker containers are running, named *jenkins_controller* and *jenkins_agent-1*.
+* Execute *buildOnManuallyStartedAgent.sh*. After that, two Docker containers are running, named *jenkins_controller* and *jenkins_agent-1*.
 
 * Wait until jenkins is fully started (means http://localhost:8080 can be loaded) and log in.
 
-* You will see, that a pipeline-project named *buildOnAgentManually* is configured.
+* You will see, that a pipeline-project named *buildOnManuallyStartedAgent* is configured.
 
 * Run *registerAgentToController.sh*. This will register *jenkins_agent-1* as build agent.
 
@@ -84,15 +84,15 @@ Unfortunately this does not work at the moment!
 
 This will execute a build inside a Jenkins agent. The agent is started by Jenkins controller. The pipeline is configured to pull the Docker image "maven:3.6.3-jdk-11" and use it as build agent.
 
-* Move to folder *buildOnAgentAutomatic*.
+* Move to folder *buildOnJenkinsStartedAgent*.
 
 * Execute *../common/scripts/buildPeassAndPeassCI.sh* or *../common/scripts/buildPeassAndPeassCI-develop.sh* respectively.
 
-* Execute *buildOnAgentAutomatic.sh*. After that, a Docker container named *jenkins_controller* is running.
+* Execute *buildOnJenkinsStartedAgent.sh*. After that, a Docker container named *jenkins_controller* is running.
 
 * After Jenkins is fully started (means http://localhost:8080 can be loaded), you can log in.
 
-* You will see, that a pipeline-project named *buildOnAgentAutomatic* is configured and a build is already running.
+* You will see, that a pipeline-project named *buildOnJenkinsStartedAgent* is configured and a build is already running.
 
 * If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
 
