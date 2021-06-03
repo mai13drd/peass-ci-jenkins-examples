@@ -67,6 +67,6 @@ jobs:
         # email body:
         body: Run https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} of workflow "${{ github.workflow }}" failed!
         # Required recipients' addresses:
-        to: ${{ secrets.MAIL_MW }}
+        to: ${{ secrets.MAIL_DAGERE }}
         # Required sender full name (address can be skipped):
         from: ${{ secrets.NAME_MW }} <${{ secrets.MAIL_USERNAME_UNI }}@uni-leipzig.de>
