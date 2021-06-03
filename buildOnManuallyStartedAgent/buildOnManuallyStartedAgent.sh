@@ -10,10 +10,10 @@ cp ../common/controller/casc.yaml ../jenkins_controller_home
 mkdir -p ../jenkins_controller_home/plugins
 cp ../common/peass-ci/target/peass-ci.hpi ../jenkins_controller_home/plugins
 
-mkdir -p ../jenkins_controller_home/jobs/buildOnAgentManually
-cp config.xml ../jenkins_controller_home/jobs/buildOnAgentManually
+mkdir -p ../jenkins_controller_home/jobs/buildOnManuallyStartedAgent
+cp config.xml ../jenkins_controller_home/jobs/buildOnManuallyStartedAgent
 
-tar -xf ../common/demo-project.tar.xz --directory ../jenkins_controller_home/jobs/buildOnAgentManually
+tar -xf ../common/demo-project.tar.xz --directory ../jenkins_controller_home/jobs/buildOnManuallyStartedAgent
 
 cp credentials.xml ../jenkins_controller_home/
 

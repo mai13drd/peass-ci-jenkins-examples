@@ -45,7 +45,7 @@ checkResults () {
 
     WORKSPACE="workspace_peass"
     EXECUTE_FILE=$PEASS_DATA/execute_workspace.json
-    if [ $1 == "buildOnAgentManually" ]
+    if [ $1 == "buildOnManuallyStartedAgent" ]
     then
         WORKSPACE=$1"_peass"
         EXECUTE_FILE=$PEASS_DATA/execute_$1.json

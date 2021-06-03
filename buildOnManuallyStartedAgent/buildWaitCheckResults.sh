@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ../common/scripts/buildPeassAndPeassCI.sh
-./buildOnAgentManually.sh
+./buildOnManuallyStartedAgent.sh
 ./waitForJenkinsStartup.sh
 ./registerAgentToController.sh
 ./waitForBuildEnd.sh
