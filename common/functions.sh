@@ -37,88 +37,82 @@ waitForBuildEnd () {
 
 checkResults () {
 
-    PEASS_DATA=$(pwd)/../jenkins_controller_home/jobs/$1/peass-data
-
-    # If minor updates to the project occur, the version name may change
-    VERSION="b02c92af73e3297be617f4c973a7a63fb603565b"
-    PREVIOUS_VERSION="e80d8a1bf747d1f70dc52260616b36cac9e44561"
+    DEMO_PROJECT_NAME=demo-project
+    JOB_FOLDER=$(pwd)/../jenkins_controller_home/jobs/$1
+    DEMO_HOME=$JOB_FOLDER/$DEMO_PROJECT_NAME
+    PEASS_DATA=$JOB_FOLDER/peass-data
+    CHANGES_DEMO_PROJECT=$PEASS_DATA/changes.json
 
     WORKSPACE="workspace_peass"
-    EXECUTE_FILE=$PEASS_DATA/execute_workspace.json
+    EXECUTION_FILE=$PEASS_DATA/execute_workspace.json
+    DEPENDENCY_FILE=$PEASS_DATA/deps_workspace.json
     if [ $1 == "buildOnManuallyStartedAgent" ]
     then
         WORKSPACE=$1"_peass"
-        EXECUTE_FILE=$PEASS_DATA/execute_$1.json
+        EXECUTION_FILE=$PEASS_DATA/execute_$1.json
+        DEPENDENCY_FILE=$PEASS_DATA/deps_$1.json
     fi
 
-    if [ ! -f $EXECUTE_FILE ]
+    RIGHT_SHA="$(cd "$DEMO_HOME" && git rev-parse HEAD)"
+
+    INITIALVERSION="3a286fe2ae9773502c78f90a6528816cbc7b2c21"
+    INITIAL_SELECTED=$(grep "initialversion" -A 1 $DEPENDENCY_FILE | grep "\"version\"" | tr -d " \"," | awk -F':' '{print $2}')
+#THIS DOES NOT WORK YET!
+    if [ "$INITIAL_SELECTED" != "$INITIALVERSION" ]
     then
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        echo "$EXECUTE_FILE could not be found!"
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+	    echo "Initialversion should be $INITIALVERSION, but was $INITIAL_SELECTED"
 
-        echo "Main Logs:"
-        ls $PEASS_DATA/$WORKSPACE
+	    #exit 1
 
-	    echo "projektTemp:"
-	    ls $PEASS_DATA/$WORKSPACE/projectTemp/
-
-        echo "projectTemp/tree_"$VERSION"_peass:"
-        ls $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$VERSION"_peass/
-
-        echo "projectTemp/tree_"$PREVIOUS_VERSION"_peass:"
-        ls $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$PREVIOUS_VERSION"_peass/
-
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        echo "cat $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$VERSION"_peass/logs/$VERSION/*/*"
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        cat $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$VERSION"_peass/logs/$VERSION/*/*
-
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        echo "cat $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$PREVIOUS_VERSION"_peass/logs/$PREVIOUS_VERSION/*/*"
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-        cat $PEASS_DATA/$WORKSPACE/projectTemp/tree_"$PREVIOUS_VERSION"_peass/logs/$PREVIOUS_VERSION/*/*
-
-	    exit 1
     fi
 
-    #Check, if peass-data/changes.json contains the correct commit-SHA
-    TEST_SHA=$(grep -A1 'versionChanges" : {' $PEASS_DATA/changes.json | grep -v '"versionChanges' | grep -Po '"\K.*(?=")')
-
-    if [ "$VERSION" != "$TEST_SHA" ]
+    if [ ! -f $EXECUTION_FILE ]
     then
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-	    echo "commit-SHA is not equal to the SHA in peass-data/changes.json!"
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-	    cat $PEASS_DATA/changes.json
+        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+        echo "$EXECUTION_FILE could not be found!"
+        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+        exit 1
+    fi
+
+    #Check, if $CHANGES_DEMO_PROJECT contains the correct commit-SHA
+    TEST_SHA=$(grep -A1 'versionChanges" : {' $CHANGES_DEMO_PROJECT | grep -v '"versionChanges' | grep -Po '"\K.*(?=")')
+    if [ "$RIGHT_SHA" != "$TEST_SHA" ]
+    then
+        echo "commit-SHA ("$RIGHT_SHA") is not equal to the SHA in $CHANGES_DEMO_PROJECT ("$TEST_SHA")!"
+	    cat $CHANGES_DEMO_PROJECT
 	    exit 1
     else
-	    echo "peass-data/changes.json contains the correct commit-SHA."
+	    echo "$CHANGES_DEMO_PROJECT contains the correct commit-SHA."
     fi
+    # If minor updates to the project occur, the version name may change
+    VERSION=$(grep '"testcases" :' -B 1 $EXECUTION_FILE | tail -2 | head -1 | tr -d "\": {")
+    echo "VERSION: $VERSION"
 
     #Check, if a slowdown is detected for innerMethod
-    STATE=$(grep '"call" : "de.test.Callee#innerMethod",\|state' $PEASS_DATA/visualization/$VERSION/de.test.CalleeTest_onlyCallMethod1.js \
-        | grep "innerMethod" -A 1 | grep '"state" : "SLOWER",' | grep -o 'SLOWER')
-
+    STATE=$(grep -A21 '"call" : "de.dagere.Callee#innerMethod",' $PEASS_DATA/visualization/$VERSION/de.dagere.ExampleTest_test.js \
+        | grep '"state" : "SLOWER",' \
+        | grep -o 'SLOWER')
     if [ "$STATE" != "SLOWER" ]
     then
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-	    echo "State for de.test.Callee#innerMethod in de.test.CalleeTest_onlyCallMethod1.js has not the expected value SLOWER, but was $STATE!"
-        echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-	    cat $PEASS_DATA/visualization/$VERSION/de.test.CalleeTest_onlyCallMethod1.js
+        echo "State for Callee#innerMethod in de.dagere.ExampleTest_test.js has not the expected value SLOWER, but was $STATE!"
+        cat $PEASS_DATA/visualization/$VERSION/de.dagere.ExampleTest_test.js
 	    exit 1
     else
 	    echo "Slowdown is detected for innerMethod."
     fi
 
-#    sourceMethodLine=$(grep "de.test.Callee.method1_" $PEASS_DATA/visualization/$VERSION/de.test.CalleeTest_onlyCallMethod1.js \
-#        -A 3 | head -n 3 | grep innerMethod)
+#var source in de.dagere.ExampleTest_test.js is empty, so this fails!
+    SOURCE_METHOD_LINE=$(grep "Callee.method1_" $PEASS_DATA/visualization/$VERSION/de.dagere.ExampleTest_test.js -A 3 \
+        | head -n 3 \
+        | grep innerMethod)
+    if [[ "$SOURCE_METHOD_LINE" != *"innerMethod();" ]]
+    then
+        echo "Line could not be detected - source reading probably failed."
+        echo "SOURCE_METHOD_LINE: $SOURCE_METHOD_LINE"
 
-#    if [[ "$sourceMethodLine" != *"innerMethod();" ]]
-#    then
-#	    echo "Line could not be detected - source reading probably failed."
-#	    echo "Line: "
-#	    echo $sourceMethodLine
-#	    exit 1
-#    fi
+        #exit 1
+
+    else
+        echo "SOURCE_METHOD_LINE is correct."
+    fi
 }
