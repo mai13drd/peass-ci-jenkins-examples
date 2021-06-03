@@ -6,12 +6,12 @@ name: Build on controller with peass(-ci)-develop
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ develop ]
+    branches: [ main ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    branches: [ develop ]
+    branches: [ main ]
   schedule:
     - cron: "0 3 * * *"
 
