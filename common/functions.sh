@@ -55,7 +55,7 @@ checkResults () {
 
     RIGHT_SHA="$(cd "$DEMO_HOME" && git rev-parse HEAD)"
 
-    INITIALVERSION="3a286fe2ae9773502c78f90a6528816cbc7b2c21"
+    INITIALVERSION="ab75d1b25564928781cc287c614325ec0992a300"
     INITIAL_SELECTED=$(grep "initialversion" -A 1 $DEPENDENCY_FILE | grep "\"version\"" | tr -d " \"," | awk -F':' '{print $2}')
 #THIS DOES NOT WORK YET!
     if [ "$INITIAL_SELECTED" != "$INITIALVERSION" ]
@@ -89,20 +89,20 @@ checkResults () {
     echo "VERSION: $VERSION"
 
     #Check, if a slowdown is detected for innerMethod
-    STATE=$(grep -A21 '"call" : "de.dagere.Callee#innerMethod",' $PEASS_DATA/visualization/$VERSION/de.dagere.ExampleTest_test.js \
+    STATE=$(grep -A21 '"call" : "de.dagere.peass.Callee#innerMethod",' $PEASS_DATA/visualization/$VERSION/de.dagere.peass.ExampleTest_test.js \
         | grep '"state" : "SLOWER",' \
         | grep -o 'SLOWER')
     if [ "$STATE" != "SLOWER" ]
     then
-        echo "State for Callee#innerMethod in de.dagere.ExampleTest_test.js has not the expected value SLOWER, but was $STATE!"
-        cat $PEASS_DATA/visualization/$VERSION/de.dagere.ExampleTest_test.js
+        echo "State for Callee#innerMethod in de.dagere.peass.ExampleTest_test.js has not the expected value SLOWER, but was $STATE!"
+        cat $PEASS_DATA/visualization/$VERSION/de.dagere.peass.ExampleTest_test.js
 	    exit 1
     else
 	    echo "Slowdown is detected for innerMethod."
     fi
 
-#var source in de.dagere.ExampleTest_test.js is empty, so this fails!
-    SOURCE_METHOD_LINE=$(grep "Callee.method1_" $PEASS_DATA/visualization/$VERSION/de.dagere.ExampleTest_test.js -A 3 \
+#var source in de.dagere.peass.ExampleTest_test.js is empty, so this fails!
+    SOURCE_METHOD_LINE=$(grep "Callee.method1_" $PEASS_DATA/visualization/$VERSION/de.dagere.peass.ExampleTest_test.js -A 3 \
         | head -n 3 \
         | grep innerMethod)
     if [[ "$SOURCE_METHOD_LINE" != *"innerMethod();" ]]
