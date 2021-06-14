@@ -55,15 +55,12 @@ checkResults () {
 
     VERSION="$(cd "$DEMO_HOME" && git rev-parse HEAD)"
 
-    INITIALVERSION="ab75d1b25564928781cc287c614325ec0992a300"
+    INITIALVERSION="f2de60284ff832d5232870da6ace172ab1361eb7"
     INITIAL_SELECTED=$(grep "initialversion" -A 1 $DEPENDENCY_FILE | grep "\"version\"" | tr -d " \"," | awk -F':' '{print $2}')
-#THIS DOES NOT WORK YET!
     if [ "$INITIAL_SELECTED" != "$INITIALVERSION" ]
     then
 	    echo "Initialversion should be $INITIALVERSION, but was $INITIAL_SELECTED"
-
-	    #exit 1
-
+        exit 1
     fi
 
     if [ ! -f $EXECUTION_FILE ]
@@ -106,9 +103,7 @@ checkResults () {
     then
         echo "Line could not be detected - source reading probably failed."
         echo "SOURCE_METHOD_LINE: $SOURCE_METHOD_LINE"
-
-        #exit 1
-
+        exit 1
     else
         echo "SOURCE_METHOD_LINE is correct."
     fi
