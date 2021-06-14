@@ -53,7 +53,7 @@ checkResults () {
         DEPENDENCY_FILE=$PEASS_DATA/deps_$1.json
     fi
 
-    RIGHT_SHA="$(cd "$DEMO_HOME" && git rev-parse HEAD)"
+    VERSION="$(cd "$DEMO_HOME" && git rev-parse HEAD)"
 
     INITIALVERSION="ab75d1b25564928781cc287c614325ec0992a300"
     INITIAL_SELECTED=$(grep "initialversion" -A 1 $DEPENDENCY_FILE | grep "\"version\"" | tr -d " \"," | awk -F':' '{print $2}')
@@ -76,17 +76,14 @@ checkResults () {
 
     #Check, if $CHANGES_DEMO_PROJECT contains the correct commit-SHA
     TEST_SHA=$(grep -A1 'versionChanges" : {' $CHANGES_DEMO_PROJECT | grep -v '"versionChanges' | grep -Po '"\K.*(?=")')
-    if [ "$RIGHT_SHA" != "$TEST_SHA" ]
+    if [ "$VERSION" != "$TEST_SHA" ]
     then
-        echo "commit-SHA ("$RIGHT_SHA") is not equal to the SHA in $CHANGES_DEMO_PROJECT ("$TEST_SHA")!"
+        echo "commit-SHA ("$VERSION") is not equal to the SHA in $CHANGES_DEMO_PROJECT ("$TEST_SHA")!"
 	    cat $CHANGES_DEMO_PROJECT
 	    exit 1
     else
 	    echo "$CHANGES_DEMO_PROJECT contains the correct commit-SHA."
     fi
-    # If minor updates to the project occur, the version name may change
-    VERSION=$(grep '"testcases" :' -B 1 $EXECUTION_FILE | tail -2 | head -1 | tr -d "\": {")
-    echo "VERSION: $VERSION"
 
     #Check, if a slowdown is detected for innerMethod
     STATE=$(grep -A21 '"call" : "de.dagere.peass.Callee#innerMethod",' $PEASS_DATA/visualization/$VERSION/de.dagere.peass.ExampleTest_test.js \
