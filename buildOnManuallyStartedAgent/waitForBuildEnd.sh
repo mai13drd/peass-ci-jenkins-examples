@@ -1,6 +1,6 @@
 #!/bin/bash
 
 source ../common/functions.sh
-#wait some time until jenkins_agent-1 is online and build is started
-sleep 10
+echo "Wait until jenkins_agent-1 is online and build is started."
+sleep 15
 waitForBuildEnd "buildOnManuallyStartedAgent"
