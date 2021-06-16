@@ -96,7 +96,6 @@ checkResults () {
 	    echo "Slowdown is detected for innerMethod."
     fi
 
-#var source in de.dagere.peass.ExampleTest_test.js is empty, so this fails!
     SOURCE_METHOD_LINE=$(grep "Callee.method1_" $PEASS_DATA/visualization/$VERSION/de.dagere.peass.ExampleTest_test.js -A 3 \
         | head -n 3 \
         | grep innerMethod)
