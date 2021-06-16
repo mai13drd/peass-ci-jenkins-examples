@@ -59,10 +59,16 @@ checkResults () {
 
     VERSION="$(cd "$DEMO_HOME" && git rev-parse HEAD)"
     echo "$VERSION"
-#    echo $(pwd) && ls
-#    cd $JOB_FOLDER && ls
-    cd $PEASS_DATA && ls
-#    cd $PEASS_DATA/visualization/$VERSION && ls
+
+    cd "$JOB_FOLDER"
+    echo "$(pwd)"
+    ls
+    cd "$PEASS_DATA"
+    echo "$(pwd)"
+    ls
+    cd "$PEASS_DATA/visualization"
+    echo "$(pwd)"
+    ls
 
     INITIALVERSION="f2de60284ff832d5232870da6ace172ab1361eb7"
     INITIAL_SELECTED=$(grep "initialversion" -A 1 $DEPENDENCY_FILE | grep "\"version\"" | tr -d " \"," | awk -F':' '{print $2}')
