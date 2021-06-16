@@ -39,8 +39,11 @@ checkResults () {
 
     DEMO_PROJECT_NAME=demo-project
     JOB_FOLDER=$(pwd)/../jenkins_controller_home/jobs/$1
+    echo "$JOB_FOLDER"
     DEMO_HOME=$JOB_FOLDER/$DEMO_PROJECT_NAME
+    echo "$DEMO_HOME"
     PEASS_DATA=$JOB_FOLDER/peass-data
+    echo "$PEASS_DATA"
     CHANGES_DEMO_PROJECT=$PEASS_DATA/changes.json
 
     WORKSPACE="workspace_peass"
