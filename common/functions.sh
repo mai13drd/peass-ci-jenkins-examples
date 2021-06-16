@@ -55,6 +55,11 @@ checkResults () {
     fi
 
     VERSION="$(cd "$DEMO_HOME" && git rev-parse HEAD)"
+    echo "$VERSION"
+    echo $(pwd) && ls
+    cd $JOB_FOLDER && ls
+    cd $PEASS_DATA/visualization && ls
+    cd $PEASS_DATA/visualization/$VERSION && ls
 
 #var source in de.dagere.peass.ExampleTest_test.js is empty, so this fails!
     SOURCE_METHOD_LINE=$(grep "Callee.method1_" $PEASS_DATA/visualization/$VERSION/de.dagere.peass.ExampleTest_test.js -A 3 \
