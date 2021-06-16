@@ -39,11 +39,8 @@ checkResults () {
 
     DEMO_PROJECT_NAME=demo-project
     JOB_FOLDER=$(pwd)/../jenkins_controller_home/jobs/$1
-    echo "$JOB_FOLDER"
     DEMO_HOME=$JOB_FOLDER/$DEMO_PROJECT_NAME
-    echo "$DEMO_HOME"
     PEASS_DATA=$JOB_FOLDER/peass-data
-    echo "$PEASS_DATA"
     CHANGES_DEMO_PROJECT=$PEASS_DATA/changes.json
 
     WORKSPACE="workspace_peass"
@@ -58,17 +55,6 @@ checkResults () {
     fi
 
     VERSION="$(cd "$DEMO_HOME" && git rev-parse HEAD)"
-    echo "$VERSION"
-
-    cd "$JOB_FOLDER"
-    echo "$(pwd)"
-    ls
-    cd "$PEASS_DATA"
-    echo "$(pwd)"
-    ls
-    cd "$PEASS_DATA/visualization"
-    echo "$(pwd)"
-    ls
 
     INITIALVERSION="f2de60284ff832d5232870da6ace172ab1361eb7"
     INITIAL_SELECTED=$(grep "initialversion" -A 1 $DEPENDENCY_FILE | grep "\"version\"" | tr -d " \"," | awk -F':' '{print $2}')
