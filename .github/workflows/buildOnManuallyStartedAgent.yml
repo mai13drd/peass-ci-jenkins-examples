@@ -36,8 +36,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
-#    - name: Build peass and peass-ci
-#      run: ../common/scripts/buildPeassAndPeassCI.sh
+    - name: Build peass and peass-ci
+      run: ../common/scripts/buildPeassAndPeassCI.sh
     - name: Build and run container
       run: ./buildOnManuallyStartedAgent.sh
     - name: Wait for jenkins startup
@@ -46,5 +46,5 @@ jobs:
       run: ./registerAgentToController.sh
     - name: Wait for build end
       run: ./waitForBuildEnd.sh
-#    - name: Check results
-#      run: ./checkResults.sh
+    - name: Check results
+      run: ./checkResults.sh
