@@ -38,6 +38,7 @@ waitForBuildEnd () {
 
 checkResults () {
 
+    cat $(pwd)/../jenkins_controller_home/logs/slaves/jenkins_agent-1/slave.log
     DEMO_PROJECT_NAME=demo-project
     JOB_FOLDER=$(pwd)/../jenkins_controller_home/jobs/$1
     DEMO_HOME=$JOB_FOLDER/$DEMO_PROJECT_NAME
