@@ -1,6 +1,8 @@
-# This is a basic workflow to help you get started with Actions
+# Executes a build of the demo-project on jenkins running inside a docker container
+# The build runs inside a manually started and registered agent-container
+# Uses peass and peass-ci develop-branches
 
-name: Build on manually started agent with peass(-ci)-develop
+name: manually started agent, peass(-ci)-develop
 
 # Controls when the action will run. 
 on:

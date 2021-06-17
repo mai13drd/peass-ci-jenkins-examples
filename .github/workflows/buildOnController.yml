@@ -1,6 +1,6 @@
-# This is a basic workflow to help you get started with Actions
+# Executes a build of the demo-project on jenkins running inside a docker container
 
-name: Build on controller
+name: controller
 
 # Controls when the action will run. 
 on:

@@ -1,6 +1,7 @@
-# This is a basic workflow to help you get started with Actions
+# Executes a build of the demo-project on jenkins running inside a docker container
+# Uses peass and peass-ci develop-branches
 
-name: Build on controller with peass(-ci)-develop
+name: controller, peass(-ci)-develop
 
 # Controls when the action will run. 
 on:

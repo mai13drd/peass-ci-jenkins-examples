@@ -1,6 +1,7 @@
-# This is a basic workflow to help you get started with Actions
+# Executes a build of the demo-project on jenkins running inside a docker container
+# The build runs inside a manually started and registered agent-container
 
-name: Build on manually started agent
+name: manually started agent
 
 # Controls when the action will run. 
 on:
