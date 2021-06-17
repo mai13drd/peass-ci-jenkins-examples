@@ -16,6 +16,10 @@ cp config.xml ../jenkins_controller_home/jobs/buildOnManuallyStartedAgent
 
 tar -xf ../common/demo-project.tar.xz --directory ../jenkins_agent-1_home
 
+cd ../jenkins_agent-1_home && ls -l
+sudo chmod -R 777 . && ls -l
+cd ../buildOnManuallyStartedAgent
+
 docker run -d --name jenkins_agent-1 --rm \
     --volume $(pwd)/../jenkins_agent-1_home:/home/ubuntu/jenkins_home jenkins_agent
 

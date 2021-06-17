@@ -14,7 +14,7 @@ ENV MAVEN_CONFIG "/var/jenkins_home/.m2"
 USER root
 RUN apt-get update && apt-get install -y maven git
 
-USER jenkins
+#USER jenkins
 
 # Standard SSH port
 EXPOSE 22
