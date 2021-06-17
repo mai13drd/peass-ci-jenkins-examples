@@ -7,12 +7,12 @@ name: manually started agent
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ develop ]
+    branches: [ setupBuildOnManuallyStartedAgent ]
   pull_request:
-    branches: [ develop ]
+    branches: [ setupBuildOnManuallyStartedAgent ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    branches: [ develop ]
+    branches: [ setupBuildOnManuallyStartedAgent ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -36,13 +36,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
-    - name: Build peass and peass-ci
-      run: ../common/scripts/buildPeassAndPeassCI.sh
+#    - name: Build peass and peass-ci
+#      run: ../common/scripts/buildPeassAndPeassCI.sh
     - name: Build and run container
       run: ./buildOnManuallyStartedAgent.sh
     - name: Wait for jenkins startup
       run: ./waitForJenkinsStartup.sh
-    - name: Wait for build end
-      run: ./waitForBuildEnd.sh
-    - name: Check results
-      run: ./checkResults.sh
+#    - name: Wait for build end
+#      run: ./waitForBuildEnd.sh
+#    - name: Check results
+#      run: ./checkResults.sh
