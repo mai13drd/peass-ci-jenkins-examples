@@ -42,7 +42,9 @@ jobs:
       run: ./buildOnManuallyStartedAgent.sh
     - name: Wait for jenkins startup
       run: ./waitForJenkinsStartup.sh
-#    - name: Wait for build end
-#      run: ./waitForBuildEnd.sh
+    - name: Register agent to controller
+      run: ./registerAgentToController.sh
+    - name: Wait for build end
+      run: ./waitForBuildEnd.sh
 #    - name: Check results
 #      run: ./checkResults.sh
