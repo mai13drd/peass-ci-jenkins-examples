@@ -14,6 +14,11 @@ cp ../common/peass-ci/target/peass-ci.hpi ../jenkins_controller_home/plugins
 mkdir -p ../jenkins_controller_home/jobs/buildOnManuallyStartedAgent
 cp config.xml ../jenkins_controller_home/jobs/buildOnManuallyStartedAgent
 
+#Set proper rights to copy remoting.jar, needed to work on github actions
+cd ../jenkins_agent-1_home
+sudo chmod -R 777 .
+cd ../buildOnManuallyStartedAgent
+
 tar -xf ../common/demo-project.tar.xz --directory ../jenkins_agent-1_home
 
 docker run -d --name jenkins_agent-1 --rm \
