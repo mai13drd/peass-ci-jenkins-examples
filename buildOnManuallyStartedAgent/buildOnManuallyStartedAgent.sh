@@ -26,4 +26,7 @@ cp config.xml ../jenkins_controller_home/jobs/buildOnManuallyStartedAgent
 
 docker run -d --name jenkins_controller --rm --publish 8080:8080 \
     --volume $(pwd)/../jenkins_controller_home:/var/jenkins_home \
-    --env JENKINS_ADMIN_ID=admin --env JENKINS_ADMIN_PASSWORD=123 jenkins_controller
+    --volume /var/run/docker.sock:/var/run/docker.sock \
+    --volume $(which docker):/usr/bin/docker \
+    --env JENKINS_ADMIN_ID=admin --env JENKINS_ADMIN_PASSWORD=123 \
+    -uroot jenkins_controller
