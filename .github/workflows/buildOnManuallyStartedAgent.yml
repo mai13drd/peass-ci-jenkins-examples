@@ -44,6 +44,8 @@ jobs:
       run: ./waitForJenkinsStartup.sh
     - name: Register agent to controller
       run: ./registerAgentToController.sh
+    - name: Print jenkins infos
+      run: ../common/scripts/printJenkinsInfos.sh
     - name: Wait for build end
       run: ./waitForBuildEnd.sh
     - name: Check results
