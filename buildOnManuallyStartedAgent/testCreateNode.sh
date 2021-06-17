@@ -20,7 +20,7 @@ cat <<EOF | java -jar ../common/jenkins-cli.jar -s "$JENKINS_URL" -auth admin:12
   <mode>NORMAL</mode>
   <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
   <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.5">
-    <host>${NODE_NAME}</host>
+    <host>$IP</host>
     <port>${SSH_PORT}</port>
     <credentialsId>jenkins_agent-1_credentials</credentialsId>
   </launcher>
