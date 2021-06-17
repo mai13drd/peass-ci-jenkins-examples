@@ -29,13 +29,7 @@
     stages {
         stage(&apos;clone&apos;) {
             steps {
-                git url: &quot;${WORKSPACE}/../../demo-project&quot;
-            }
-        }
-        stage(&apos;test&apos;) {
-            steps {
-                measure VMs: 2, iterations: 2, repetitions: 2, measurementMode: &apos;COMPLETE&apos;,
-                useSampling: false, useSourceInstrumentation: false, warmup: 0
+                echo "hello"
             }
         }
     }
