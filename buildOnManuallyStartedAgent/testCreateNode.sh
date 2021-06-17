@@ -5,7 +5,7 @@
     NODE_HOME='/home/build/jenkins-node'
     EXECUTORS=1
     SSH_PORT=22
-    CRED_ID=$3
+    CRED_ID=jenkins_agent-1_credentials
     LABELS=build
     USERID=${USER}
      

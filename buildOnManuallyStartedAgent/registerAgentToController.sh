@@ -20,7 +20,7 @@ cat <<EOF | java -jar ../common/jenkins-cli.jar -s "http://localhost:8080" -auth
     <sshHostKeyVerificationStrategy class="hudson.plugins.sshslaves.verifiers.NonVerifyingKeyVerificationStrategy"/>
     <tcpNoDelay>true</tcpNoDelay>
   </launcher>
-  <label></label>
+  <label>jenkins_agent-1</label>
   <nodeProperties/>
 </slave>
 EOF
