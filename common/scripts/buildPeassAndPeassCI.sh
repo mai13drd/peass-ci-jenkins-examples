@@ -6,7 +6,7 @@ cd ../common
 
 git clone https://github.com/dagere/peass && \
     cd peass && \
-    git reset --hard d477c0fc && \
+    git reset --hard 72ef6aa0 && \
     mvn clean install -pl dependency,measurement,analysis -DskipTests
 
 cd ..
