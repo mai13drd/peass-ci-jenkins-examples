@@ -35,7 +35,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
-    - name: peass (01.06. 87a99a81) peass-ci (01.06. 9b9f90e)
+    - name: peass (01.06. f67a1ea0) peass-ci (01.06. e15f7ed)
       run: ../common/scripts/buildPeassAndPeassCI.sh
     - name: Build and run container
       run: ./buildOnController.sh
