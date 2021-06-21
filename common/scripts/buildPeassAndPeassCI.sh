@@ -13,6 +13,6 @@ cd ..
 
 git clone https://github.com/dagere/peass-ci && \
     cd peass-ci && \
-    git reset --hard 3f521d9 && \
+    git reset --hard 9c45b6d && \
     ./mvnw clean -B package --file pom.xml -DskipTests
 
