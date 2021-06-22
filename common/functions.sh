@@ -37,6 +37,10 @@ waitForBuildEnd () {
 
 checkResults () {
 
+    echo "------------------------------------"
+    java -jar ../common/jenkins-cli.jar -s http://localhost:8080 -auth admin:123 console "$1" 1
+    echo "------------------------------------"
+
     DEMO_PROJECT_NAME=demo-project
     JOB_FOLDER=$(pwd)/../jenkins_controller_home/jobs/$1
     DEMO_HOME=$JOB_FOLDER/$DEMO_PROJECT_NAME
