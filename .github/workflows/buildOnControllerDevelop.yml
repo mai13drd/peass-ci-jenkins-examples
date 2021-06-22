@@ -38,6 +38,16 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
+    - name: Get current time
+      uses: 1466587594/get-current-time@v2
+      id: current-time
+      with:
+        format: YYYYMMDD-HH
+        utcOffset: "+02:00"
+    - name: Print current time
+      env:
+        R_TIME: "${{ steps.current-time.outputs.readableTime }}"
+      run: echo $R_TIME
     - name: Build peass(-ci)-develop
       run: ../common/scripts/buildPeassAndPeassCI-develop.sh
     - name: Build and run container
