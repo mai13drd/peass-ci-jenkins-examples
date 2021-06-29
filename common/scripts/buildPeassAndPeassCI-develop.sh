@@ -10,7 +10,7 @@ git clone --branch develop https://github.com/dagere/peass && \
 
 cd ..
 
-git clone --branch develop https://github.com/dagere/peass-ci && \
+git clone --branch spotbugsErrors https://github.com/mai13drd/peass-ci && \
     cd peass-ci && \
     ./mvnw clean -B package --file pom.xml -DskipTests
 
