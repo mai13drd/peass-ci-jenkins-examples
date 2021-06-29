@@ -60,3 +60,28 @@ jobs:
       run: ./waitForBuildEnd.sh
     - name: Check results
       run: ./checkResults.sh
+
+  sendMailOnFailure:
+    needs: [buildOnManuallyStartedAgent]
+    if: success() != true
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send email on failure
+      uses: dawidd6/action-send-mail@v3
+      with:
+        # Required mail server address:
+        server_address: studserv.uni-leipzig.de
+        # Required mail server port:
+        server_port: 25
+        # Required mail server username:
+        username: ${{ secrets.MAIL_USERNAME }}
+        # Required mail server password:
+        password: ${{ secrets.MAIL_PASSWORD }}
+        # Required mail subject:
+        subject: Workflow "${{ github.workflow }}" on ${{ github.repository }} failed!
+        # email body:
+        body: Run https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} of workflow "${{ github.workflow }}" failed!
+        # Required recipients' addresses:
+        to: ${{ secrets.MAIL_DAGERE }}
+        # Required sender full name (address can be skipped):
+        from: ${{ secrets.NAME_MW }} <${{ secrets.MAIL_USERNAME_UNI }}@uni-leipzig.de>
