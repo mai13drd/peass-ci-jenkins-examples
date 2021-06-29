@@ -8,7 +8,7 @@ name: jenkins started agent, peass(-ci)-develop
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ develop ]
+    branches: [ spotbugsErrors ]
   pull_request:
     branches: [ develop ]
   # Allows you to run this workflow manually from the Actions tab
