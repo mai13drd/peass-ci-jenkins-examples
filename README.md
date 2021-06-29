@@ -11,7 +11,7 @@ All examples run Jenkins inside a Docker container. Scripts are provided to buil
 
 The YAML-files in *.github/workflows* configure jobs to be built on github-actions with Java 8, 11 and 15.
 
-At the moment four jobs exist:
+There exist six jobs:
 
 * buildOnController
 
@@ -21,14 +21,18 @@ At the moment four jobs exist:
 
 * buildOnJenkinsStartedAgentDevelop
 
-So *buildOnController* and *buildOnJenkinsStartedAgent* are built on github. Also both examples are built using the development-branches of *Peass* and *Peass-CI* respectively.
+* buildOnManuallyStartedAgent
+
+* buildOnManuallyStartedAgentDevelop
+
+So each example is built on github, respectively using the main- and develop-branches of *Peass* and *Peass-CI*.
 
 ## Important
 Each example has its own folder. Make sure to always run the appropriate scripts from the appropriate folder!
 
 To build the latest version of *Peass-CI*, execute *buildPeassAndPeassCI.sh* in common/scripts. This will install the necessary *Peass*-dependencies to build *Peass-CI* afterwards. For installing the develop-branches, execute *buildPeassAndPeassCI-develop.sh*. Always call these scripts from inside an example-folder! For example, inside the *buildOnController*-folder execute *../common/scripts/buildPeassAndPeassCI.sh*.
 
-Before executing another example, don't forget to cleanup the Jenkins workspace! Therefore a script is provided for each example. This will also delete the *peass* and *peass-ci*-folders created inside *common*-folder by *buildPeassAndPeassCI(-develop).sh*. Run the cleanup-scripts with sudo, since the containers are started as user root!
+Before executing another example, don't forget to cleanup the Jenkins workspace! Therefore a script is provided for each example. This will also delete the *peass* and *peass-ci*-folders created inside *common*-folder by *buildPeassAndPeassCI(-develop).sh*. Run the cleanup-scripts with sudo, since the controller-containers are started as user root!
 
 To log in to Jenkins on http://localhost:8080, enter *admin* as user and *123* as password.
 
@@ -53,10 +57,30 @@ This will execute a build on a Jenkins server running inside a Docker container.
 
 * Clean the workspace of Jenkins controller using *cleanControllerWorkspace.sh*.
 
+### Build testproject in an agent automatically started by Jenkins controller
+
+This will execute a build inside a Jenkins agent. The agent is started by Jenkins controller. The pipeline is configured to pull the Docker image "maven:3.6.3-jdk-11" and use it as build agent.
+
+* Move to folder *buildOnJenkinsStartedAgent*.
+
+* Execute *../common/scripts/buildPeassAndPeassCI.sh* or *../common/scripts/buildPeassAndPeassCI-develop.sh* respectively.
+
+* Execute *buildOnJenkinsStartedAgent.sh*. After that, a Docker container named *jenkins_controller* is running.
+
+* After Jenkins is fully started (means http://localhost:8080 can be loaded), you can log in.
+
+* You will see, that a pipeline-project named *buildOnJenkinsStartedAgent* is configured and a build is already running.
+
+* If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
+
+* You can run *checkResults.sh* afterwards, to check if measurement-results are as expected.
+
+* Running *buildWaitCheckResults.sh* will run all the above steps. So instead of running each single step on its own, you can also execute *buildWaitCheckResults.sh*.
+
+* Clean the workspace of Jenkins controller using *cleanControllerWorkspace.sh*.
+
 ### Build testproject in a manually registered Jenkins agent
 This will execute a build inside a Jenkins agent. Therefore, next to the Docker container for the Jenkins controller, a second one is started and manually registered to Jenkins as build-agent. 
-
-Unfortunately this does not work at the moment!
 
 * Move to folder *buildOnManuallyStartedAgent*.
 
@@ -79,25 +103,3 @@ Unfortunately this does not work at the moment!
 * Running *buildWaitCheckResults.sh* will run all the above steps. So instead of running each single step on its own, you can also execute *buildWaitCheckResults.sh*.
 
 * Clean the workspaces of Jenkins controller and agent using *cleanWorkspaces.sh*.
-
-### Build testproject in an agent automatically started by Jenkins controller
-
-This will execute a build inside a Jenkins agent. The agent is started by Jenkins controller. The pipeline is configured to pull the Docker image "maven:3.6.3-jdk-11" and use it as build agent.
-
-* Move to folder *buildOnJenkinsStartedAgent*.
-
-* Execute *../common/scripts/buildPeassAndPeassCI.sh* or *../common/scripts/buildPeassAndPeassCI-develop.sh* respectively.
-
-* Execute *buildOnJenkinsStartedAgent.sh*. After that, a Docker container named *jenkins_controller* is running.
-
-* After Jenkins is fully started (means http://localhost:8080 can be loaded), you can log in.
-
-* You will see, that a pipeline-project named *buildOnJenkinsStartedAgent* is configured and a build is already running.
-
-* If the build is finished, you can check its dashboard. You will find informations about performance changes and their possibly causes.
-
-* You can run *checkResults.sh* afterwards, to check if measurement-results are as expected.
-
-* Running *buildWaitCheckResults.sh* will run all the above steps. So instead of running each single step on its own, you can also execute *buildWaitCheckResults.sh*.
-
-* Clean the workspace of Jenkins controller using *cleanControllerWorkspace.sh*.
