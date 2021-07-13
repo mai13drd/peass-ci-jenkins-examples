@@ -42,6 +42,11 @@ checkResults () {
     echo "------------------------------------"
 
     DEMO_PROJECT_NAME=demo-project
+    if [ $1 == "buildOnControllerCompileError" ]
+    then
+        DEMO_PROJECT_NAME=demo-project-compile-error
+    fi
+
     JOB_FOLDER=$(pwd)/../jenkins_controller_home/jobs/$1
     DEMO_HOME=$JOB_FOLDER/$DEMO_PROJECT_NAME
     PEASS_DATA=$JOB_FOLDER/peass-data
@@ -61,6 +66,11 @@ checkResults () {
     VERSION="$(cd "$DEMO_HOME" && git rev-parse HEAD)"
 
     INITIALVERSION="f2de60284ff832d5232870da6ace172ab1361eb7"
+    if [ $1 == "buildOnControllerCompileError" ]
+    then
+        INITIALVERSION="696131783b5ea6b9299b45a888d0f60f38547547"
+    fi
+
     INITIAL_SELECTED=$(grep "initialversion" -A 1 $DEPENDENCY_FILE | grep "\"version\"" | tr -d " \"," | awk -F':' '{print $2}')
     if [ "$INITIAL_SELECTED" != "$INITIALVERSION" ]
     then
