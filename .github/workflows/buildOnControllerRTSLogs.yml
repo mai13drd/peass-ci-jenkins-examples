@@ -1,0 +1,63 @@
+# Executes a build of the demo-project on jenkins running inside a docker container
+
+name: controller
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ rtsLogs ]
+  pull_request:
+    branches: [ rtsLogs ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    branches: [ rtsLogs ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This job starts a Jenkins server running inside a Docker container and builds the testproject
+  buildOnController:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    strategy:
+       matrix:
+          java: [ 1.8, 11, 15 ]
+       fail-fast: false
+
+    defaults:
+      run:
+        working-directory: buildOnController
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Set up JDK ${{ matrix.java }}
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java }}
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ matrix.java }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ matrix.java }}-m2
+    - name: Get current time
+      uses: 1466587594/get-current-time@v2
+      id: current-time
+      with:
+        format: YYYYMMDD-HH
+        utcOffset: "+02:00"
+    - name: Print current time
+      env:
+        R_TIME: "${{ steps.current-time.outputs.readableTime }}"
+      run: echo $R_TIME
+    - name: Build peass and peass-ci
+      run: ../common/scripts/buildPeassAndPeassCI.sh
+    - name: Build and run container
+      run: ./buildOnController.sh
+    - name: Wait for jenkins startup
+      run: ./waitForJenkinsStartup.sh
+    - name: Wait for build end
+      run: ./waitForBuildEnd.sh
+    - name: Check results
+      run: ./checkResults.sh
