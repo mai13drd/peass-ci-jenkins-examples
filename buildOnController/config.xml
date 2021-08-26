@@ -28,7 +28,7 @@
     stages {
         stage(&apos;clone&apos;) {
             steps {
-                git url: &quot;${WORKSPACE}/../demo-project&quot;
+                git url: &quot;https://github.com/DaGeRe/demo-with-jenkinsfile.git&quot;, branch: &apos;main&apos;
             }
         }
         stage(&apos;test&apos;) {
